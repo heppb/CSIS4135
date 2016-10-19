@@ -36,3 +36,13 @@ textarea {
     display: none
   }
 }
+p{
+    font-size: 28px;
+}
+body {
+    background-color: lightgreen;
+}
+/*.jumbotron {
+    background-color: lightgray;
+}*/
+

@@ -14,6 +14,11 @@
     {
         <tr>
             <td>@genre.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@genre.GenreID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@genre.GenreID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@genre.GenreID">Delete</a>
+            </td>
         </tr>
     }
     </table>
