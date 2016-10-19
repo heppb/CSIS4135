@@ -23,9 +23,19 @@ namespace MusicFall2016.Controllers
         {
             return View();
         }
-        public IActionResult Update()
+        public IActionResult Update(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var artist = "???";
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return View(artist);
         }
         public IActionResult Delete()
         {
