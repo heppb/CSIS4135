@@ -3,12 +3,14 @@
     ViewData["Title"] = "Artist Create";
 }
 <h2>Artist Create</h2>
-<div>
-    Title <p><input type="text" id="CreateName" value="" /></p>
-    Artist <p><input type="text" id="CreateBio" value="" /></p>
-</div>
-<div>
-    <button id="createButton">
-        Create Artist
-    </button>
-</div>
+<form action="/" method="post">
+    <div>
+        Title <p><input type="text" id="CreateName" value="" /></p>
+        Artist <p><input type="text" id="CreateBio" value="" /></p>
+    </div>
+    <div>
+        <button id="createButton">
+            Create Artist
+        </button>
+    </div>
+</form>
