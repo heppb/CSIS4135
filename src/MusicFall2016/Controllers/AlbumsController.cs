@@ -54,8 +54,8 @@ namespace MusicFall2016.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }*/
-            _context.Albums.Add(a);
-            _context.SaveChanges();
+            //_context.Albums.Add(a);
+            //_context.SaveChanges();
             return View();
         }
         public IActionResult Read()

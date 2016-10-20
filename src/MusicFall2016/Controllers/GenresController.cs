@@ -11,15 +11,23 @@ namespace MusicFall2016.Controllers
 {
     public class GenresController : Controller
     {
+        private readonly MusicDbContext _context;
+
+        public GenresController(MusicDbContext context)
+        {
+            _context = context;
+        }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var genres = _context.Genres.ToList();
+            return View(genres);
         }
         public IActionResult Create()
         {
             return View();
         }
+        [HttpPost]
         public IActionResult Create(Genre genre)
         {
             return View();
@@ -45,10 +53,6 @@ namespace MusicFall2016.Controllers
             }
 
             return View(genre);
-        }
-        public IActionResult Delete()
-        {
-            return View();
         }
     }
 }

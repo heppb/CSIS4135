@@ -11,15 +11,23 @@ namespace MusicFall2016.Controllers
 {
     public class ArtistsController : Controller
     {
+        private readonly MusicDbContext _context;
+
+        public ArtistsController(MusicDbContext context)
+        {
+            _context = context;
+        }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var artists = _context.Artists.ToList();
+            return View(artists);
         }
         public IActionResult Create()
         {
             return View();
         }
+        [HttpPost]
         public IActionResult Create(Artist artist)
         {
             return View();
