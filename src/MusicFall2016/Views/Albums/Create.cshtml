@@ -6,13 +6,21 @@
 <form action="#" method="post">
     <div>
         Title <p><input type="text" id="Title" value="" /></p>
-        Artist <p><input type="text" id="Artist" value="" /></p>
-        Genre <p><input type="text" id="Genre" value="" /></p>
-        Price <p><input type="text" id="Price" value="" /></p>
+        Artist <p><select class="form-control" data-val="true" data-val-required="The Artist field is required." id="ArtistID" name="ArtistID"></select></p>
+        Genre <p><select class="form-control" data-val="true" data-val-required="The Genre field is required." id="GenreID" name="GenreID"></select></p>
+        Price <input class="form-control" type="text" data-val="true" data-val-number="Please Enter a Number" data-val-range="Price must be between 0.01 and 100" data-val-range-max="100" data-val-range-min="0.01" data-val-regex="Not a valid number" data-val-regex-pattern="^\d+(\.\d{0,2})?$" data-val-required="The Price is required" id="Price" name="Price" value="">
+        
     </div>
     <div>
         <button id="createButton">
             Create Album
         </button>
+    </div>
+</form>
+<form action="Index" method="post">
+    <div>
+        <button id="backButton">
+            Back to List
+         </button>
     </div>
 </form>
