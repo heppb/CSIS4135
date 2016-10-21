@@ -34,13 +34,23 @@ namespace MusicFall2016.Controllers
             {
                 _context.Genres.Add(genre);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View();
         }
-        public IActionResult Read()
+        public IActionResult Read(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var genre = _context.Genres.SingleOrDefault(a => a.GenreID == id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+
+            return View(genre);
         }
         /*public IActionResult Update()
         {
@@ -52,7 +62,7 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            var genre = "???";
+            var genre = _context.Genres.SingleOrDefault(a => a.GenreID == id);
             if (genre == null)
             {
                 return NotFound();

@@ -33,13 +33,22 @@ namespace MusicFall2016.Controllers
             {
                 _context.Albums.Add(album);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View();
         }
-        public IActionResult Read()
+        public IActionResult Read(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var albums = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+            if (albums == null)
+            {
+                return NotFound();
+            }
+            return View(albums);
         }
         /*public IActionResult Update()
         {
@@ -51,7 +60,7 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            var albums = "???";
+            var albums = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
             if (albums == null)
             {
                 return NotFound();

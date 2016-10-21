@@ -1,8 +1,9 @@
-﻿@model IEnumerable<MusicFall2016.Models.Artist>
+﻿@model MusicFall2016.Models.Artist
 @{
     ViewData["Title"] = "Artist Update";
 }
 <h2>Artist Update</h2>
 <form action="/" method="post">
-
+    <div>Name: @Model.Name</div>
+    <div>Bio: @Model.Bio</div>
 </form>

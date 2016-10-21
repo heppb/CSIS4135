@@ -34,13 +34,23 @@ namespace MusicFall2016.Controllers
             {
                 _context.Artists.Add(artist);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View();
         }
-        public IActionResult Read()
+        public IActionResult Read(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var artist = _context.Artists.SingleOrDefault(a => a.ArtistID == id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return View(artist);
         }
         /*public IActionResult Update()
         {
@@ -52,7 +62,7 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            var artist = "???";
+            var artist = _context.Artists.SingleOrDefault(a => a.ArtistID == id);
             if (artist == null)
             {
                 return NotFound();
