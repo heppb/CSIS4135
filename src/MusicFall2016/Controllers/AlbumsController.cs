@@ -29,33 +29,12 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Create(Album album)
         {
-            Album a = new Album
-            {
-                AlbumID = 1,
-                Title = "Hey",
-                Price = (System.Decimal) 3.33,
-                ArtistID = 3,
-                Artist = new Artist
-                {
-                    ArtistID = 351,
-                    Name = "john",
-                    Bio = "heyo",
-                },
-                GenreID = 6,
-                Genre = new Genre
-                {
-                    GenreID = 1,
-                    Name = "MY GENRE",
-                },
-            };
-            /*if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Albums.Add(album);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
-            }*/
-            _context.Albums.Add(a);
-            _context.SaveChanges();
+            }
             return View();
         }
         public IActionResult Read()
@@ -82,6 +61,13 @@ namespace MusicFall2016.Controllers
         }
         public IActionResult Delete()
         {
+            return View();
+        }
+        public ActionResult Test()
+        {
+            ViewBag.MyMessageToUsers = "Hello from me.";
+            ViewBag.AnswerText = "Your answer goes here.";
+
             return View();
         }
     }

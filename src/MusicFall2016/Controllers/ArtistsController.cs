@@ -30,6 +30,12 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Create(Artist artist)
         {
+            if (ModelState.IsValid)
+            {
+                _context.Artists.Add(artist);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View();
         }
         public IActionResult Read()
@@ -53,10 +59,6 @@ namespace MusicFall2016.Controllers
             }
 
             return View(artist);
-        }
-        public IActionResult Delete()
-        {
-            return View();
         }
     }
 }
