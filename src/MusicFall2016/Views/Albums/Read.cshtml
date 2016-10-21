@@ -1,8 +1,16 @@
-﻿@model IEnumerable<MusicFall2016.Models.Album>
+﻿@model MusicFall2016.Models.Album
 @{
     ViewData["Title"] = "Albums Read";
 }
 <h2>Album Read</h2>
 <form action="/" method="post">
-
+    @Model.Title
+    @Model.Artist.Name
+    @Model.Genre.Name
+    @Model.Price
+</form>
+<form action="/Albums/Details" method="get">
+    <button id="backButton">
+        Back to List
+    </button>
 </form>

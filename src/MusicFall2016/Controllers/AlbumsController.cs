@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicFall2016.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +20,15 @@ namespace MusicFall2016.Controllers
         // GET: /<controller>/
         public IActionResult Details()
         {
-            var albums =  _context.Albums.ToList();
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre).ToList();
             return View(albums);
         }
         public IActionResult Create()
         {
+            ViewBag.ArtistList = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
             return View();
         }
         [HttpPost]
@@ -43,7 +48,10 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            var albums = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .SingleOrDefault(a => a.AlbumID == id);
             if (albums == null)
             {
                 return NotFound();
@@ -60,7 +68,10 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            var albums = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .SingleOrDefault(a => a.AlbumID == id);
             if (albums == null)
             {
                 return NotFound();
@@ -68,8 +79,32 @@ namespace MusicFall2016.Controllers
 
             return View(albums);
         }
-        public IActionResult Delete()
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .SingleOrDefault(a => a.AlbumID == id);
+            if (albums == null)
+            {
+                return NotFound();
+            }
+
+            return View(albums);
+        }
+        [HttpPost]
+        public IActionResult Delete(Album album)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Albums.Remove(album);
+                _context.SaveChanges();
+                return RedirectToAction("Details");
+            }
             return View();
         }
         /*public ActionResult Test()

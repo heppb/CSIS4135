@@ -9,10 +9,10 @@ namespace MusicFall2016.Models
     public class Album
     {
         public int AlbumID { get; set; }
+        [Required(ErrorMessage = "Please enter a title")]
         public string Title { get; set; }
-        public decimal Price { get; set; }
         [Required(ErrorMessage = "Please enter a price from 0.01 - 100.00")]
-
+        public decimal Price { get; set; }
         // Foreign key
         public int ArtistID { get; set; }
         // Navigation property

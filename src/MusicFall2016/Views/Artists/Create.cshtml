@@ -1,12 +1,12 @@
-﻿@model IEnumerable<MusicFall2016.Models.Artist>
+﻿@model MusicFall2016.Models.Artist
 @{
     ViewData["Title"] = "Artist Create";
 }
 <h2>Artist Create</h2>
-<form action="Create" method="post">
+<form asp-action="Create" method="post">
     <div>
-        Name <p><input type="text" id="Name" value="" /></p>
-        Bio <p><input type="text" id="Bio" value="" /></p>
+        Name <p><input type="text" id="Name" asp-for="Name" value="" /></p>
+        Bio <p><input type="text" id="Bio" asp-for="Bio" value="" /></p>
     </div>
     <div>
         <button id="createButton2">

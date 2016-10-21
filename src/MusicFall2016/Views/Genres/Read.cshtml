@@ -1,11 +1,10 @@
-﻿@model IEnumerable<MusicFall2016.Models.Genre>
+﻿@model MusicFall2016.Models.Genre
 @{
     ViewData["Title"] = "Genre Read";
 }
 <h2>Genre Read</h2>
-   
-ViewBag.Genre.Name
-<form action="Details" method="get">
+<p>@Model.Name</p>
+<form action="/Genres/Details" method="get">
     <button id="backButton">
         Back to List
     </button>
