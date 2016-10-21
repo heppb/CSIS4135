@@ -42,10 +42,10 @@ namespace MusicFall2016.Controllers
         {
             return View();
         }
-        public IActionResult Update()
+        /*public IActionResult Update()
         {
             return View();
-        }
+        }*/
         public IActionResult Update(int? id)
         {
             if (id == null)
