@@ -70,5 +70,12 @@ namespace MusicFall2016.Controllers
 
             return View(artist);
         }
+        [HttpPost]
+        public IActionResult Update(Artist artist)
+        {
+            _context.Artists.Update(artist);
+            _context.SaveChanges();
+            return RedirectToAction("Details");
+        }
     }
 }

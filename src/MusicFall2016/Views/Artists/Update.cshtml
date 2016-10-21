@@ -5,11 +5,20 @@
 <h2>Artist Update</h2>
 <form asp-action="Update" method="post">
     <input type="hidden" asp-for="ArtistID" value="@Model.ArtistID">
-    <div>Name: @Model.Name</div>
-    <div>Bio: @Model.Bio</div>
-    <div>
-        <button id="updateButton">
-            Update Artist
-        </button>
-    </div>
-</form>
+        <div>
+            Name <p><input type="text" id="Name" asp-for="Name" value="@Model.Name" /></p>
+            Bio <p><input type="text" id="Bio" asp-for="Bio" value="@Model.Bio" /></p>
+        </div>
+        <div>
+            <button id="updateButton">
+                Save Updates
+            </button>
+        </div>
+    </form>
+    <form action="Details" method="get">
+        <div>
+            <button id="backButton">
+                Back to List
+            </button>
+        </div>
+    </form>
