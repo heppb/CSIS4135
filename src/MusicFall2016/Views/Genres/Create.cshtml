@@ -5,7 +5,8 @@
 <h2>Genre Create</h2>
 <form asp-action="Create" method="post">
     <div>
-        Genre Name <p><input type="text" id="Name" asp-for="Name" value="" /></p>
+        <div>Genre Name <p><input type="text" id="Name" asp-for="Name" value="" max="20"></p></div>
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div>
         <button id="createButton3">

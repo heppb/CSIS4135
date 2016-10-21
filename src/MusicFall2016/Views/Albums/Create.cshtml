@@ -5,10 +5,13 @@
 <h2>Album Create</h2>
 <form asp-action="Create" method="post">
     <div>
-        Title <p><input type="text" id="Title" asp-for="Title" value="" /></p>
-        Artist <p><select asp-for="ArtistID"asp-items="ViewBag.ArtistList" data-val="true" data-val-required="The Artist field is required." id="ArtistID" name="ArtistID" class="btn-lg"></select></p>
-        Genre <p><select  asp-for="GenreID" asp-items="ViewBag.GenreList" data-val="true" data-val-required="The Genre field is required." id="GenreID" name="GenreID" class="btn-lg"></select></p>
-        Price <p><input type="text" data-val="true" data-val-number="The Price field is required" data-val-range="Price must be between 0.01 and 100" data-val-range-max="100" data-val-range-min="0.01" data-val-regex="Not a valid number" data-val-regex-pattern="^\d+(\.\d{0,2})?$" data-val-required="The Price is required" id="Price" name="Price" asp-for="Price" value=""></p>
+        <div>Title <p><input type="text" id="Title" asp-for="Title" value="" /></p></div>
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <div>Artist <p><select asp-for="ArtistID" asp-items="ViewBag.ArtistList" data-val="true" data-val-required="The Artist field is required." id="ArtistID" name="ArtistID" class="btn-lg"></select></p></div>
+        <span asp-validation-for="ArtistID" class="text-danger"></span>
+        <div>Genre <p><select asp-for="GenreID" asp-items="ViewBag.GenreList" data-val="true" data-val-required="The Genre field is required." id="GenreID" name="GenreID" class="btn-lg"></select></p></div>
+        <span asp-validation-for="GenreID" class="text-danger"></span>
+        <div>Price <p><input type="text" asp-for="Price" value=""></p></div>
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
     <div>

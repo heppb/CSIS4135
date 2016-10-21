@@ -7,7 +7,9 @@
     <input type="hidden" asp-for="ArtistID" value="@Model.ArtistID">
         <div>
             Name <p><input type="text" id="Name" asp-for="Name" value="@Model.Name" /></p>
+            <span asp-validation-for="Name" class="text-danger"></span>
             Bio <p><input type="text" id="Bio" asp-for="Bio" value="@Model.Bio" /></p>
+            <span asp-validation-for="Bio" class="text-danger"></span>
         </div>
         <div>
             <button id="updateButton">
