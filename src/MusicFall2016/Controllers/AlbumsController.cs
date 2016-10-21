@@ -17,7 +17,7 @@ namespace MusicFall2016.Controllers
             _context = context;
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Details()
         {
             var albums =  _context.Albums.ToList();
             return View(albums);
@@ -63,12 +63,12 @@ namespace MusicFall2016.Controllers
         {
             return View();
         }
-        public ActionResult Test()
+        /*public ActionResult Test()
         {
             ViewBag.MyMessageToUsers = "Hello from me.";
             ViewBag.AnswerText = "Your answer goes here.";
 
             return View();
-        }
+        }*/
     }
 }
