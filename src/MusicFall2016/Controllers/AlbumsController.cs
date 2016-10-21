@@ -40,6 +40,8 @@ namespace MusicFall2016.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Details");
             }
+            ViewBag.ArtistList = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
             return View();
         }
         public IActionResult Read(int? id)
@@ -68,6 +70,8 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
+            ViewBag.ArtistList = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
             var albums = _context.Albums
                 .Include(a => a.Artist)
                 .Include(a => a.Genre)
@@ -78,6 +82,13 @@ namespace MusicFall2016.Controllers
             }
 
             return View(albums);
+        }
+        [HttpPost]
+        public IActionResult Update(Album album)
+        {
+            _context.Albums.Update(album);
+            _context.SaveChanges();
+            return RedirectToAction("Details");
         }
         public IActionResult Delete(int? id)
         {
@@ -99,13 +110,9 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Delete(Album album)
         {
-            if (ModelState.IsValid)
-            {
                 _context.Albums.Remove(album);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
-            }
-            return View();
         }
         /*public ActionResult Test()
         {

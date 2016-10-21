@@ -3,7 +3,8 @@
     ViewData["Title"] = "Genre Update";
 }
 <h2>Genre Update</h2>
-<form action="/" method="post">
+<form asp-action="Update" method="post">
+    <input type="hidden" asp-for="GenreID" value="@Model.GenreID">
     <div>Name: @Model.Name</div>
     <div>
         <button id="updateButton">
