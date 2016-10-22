@@ -88,7 +88,6 @@ namespace MusicFall2016.Controllers
             var albums = _context.Albums
                 .Include(a => a.Artist)
                 .Include(a => a.Genre).ToList();
-            ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
             if (albums == null)
             {
                 return NotFound();
