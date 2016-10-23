@@ -4,10 +4,11 @@
 }
 <h2>Information for @Model.Title</h2>
 <form action="/" method="post">
-    <p>@Model.Title</p>
-    <p>@Model.Artist.Name</p>
-    <p>@Model.Genre.Name</p>
-    <p>@Model.Price</p>
+    <p>Title: @Model.Title</p>
+    <p>Artist Name: @Model.Artist.Name</p>
+    <p>Artist Bio: @Model.Artist.Bio</p>
+    <p>Genre: @Model.Genre.Name</p>
+    <p>Price: @Model.Price</p>
 </form>
 <form action="/Albums/Details" method="get">
     <button id="backButton">
