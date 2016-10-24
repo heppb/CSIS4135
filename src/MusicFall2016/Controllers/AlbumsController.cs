@@ -114,12 +114,35 @@ namespace MusicFall2016.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Details");
         }
-        /*public ActionResult Test()
-        {
-            ViewBag.MyMessageToUsers = "Hello from me.";
-            ViewBag.AnswerText = "Your answer goes here.";
 
-            return View();
+        //Sorting Method
+        //https://docs.asp.net/en/latest/data/ef-mvc/sort-filter-page.html?highlight=sorting
+
+        /*public async Task<IActionResult> Index(string sortOrder)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var students = from s in _context.Students
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.LastName);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.LastName);
+                    break;
+            }
+            return View(await students.AsNoTracking().ToListAsync());
         }*/
+
+        //Searching method
+        // https://docs.asp.net/en/latest/tutorials/first-mvc-app/search.html
     }
 }
