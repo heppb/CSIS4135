@@ -114,6 +114,10 @@ namespace MusicFall2016.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Details");
         }
+        public IActionResult Like(int? id)
+        {
+            return View();
+        }
 
         //Sorting Method
         //https://docs.asp.net/en/latest/data/ef-mvc/sort-filter-page.html?highlight=sorting
