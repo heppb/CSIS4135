@@ -11,12 +11,10 @@
         </button>
     </div>
 </form>
-<form asp-action="Details" method="post">
+<form asp-controller="Albums" asp-action="Details" method="get">
     <div>
-        <input type="text" name="searchString" value="" />
-        <button>
-            Search
-        </button>
+        <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
     </div>
 </form>
 <form asp-action="Details" method="get">

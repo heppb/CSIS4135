@@ -19,12 +19,26 @@ namespace MusicFall2016.Controllers
             _context = context;
         }
         // GET: /<controller>/
-        public IActionResult Details()
+        public IActionResult Details(string searchString)
         {
+            if(searchString != null)
+            {
+                var album = from m in _context.Albums
+                            select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                album = album.Where(s => s.Title.Contains(searchString));
+            }
+
+            return View(album.Include(a => a.Artist).Include(a => a.Genre).ToList());
+            }
+            else {
             var albums = _context.Albums
                 .Include(a => a.Artist)
                 .Include(a => a.Genre).ToList();
             return View(albums);
+            }
         }
         public IActionResult Create()
         {
@@ -132,17 +146,9 @@ namespace MusicFall2016.Controllers
             return RedirectToAction("Details");
         }
         [HttpPost]
-        public IActionResult Details(string searchString)
+        public string Details(string searchString, bool notUsed)
         {
-            var album = from m in _context.Albums
-                         select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                album = album.Where(s => s.Title.Contains(searchString));
-            }
-            
-            return View(album.Include(a => a.Artist).Include(a => a.Genre).ToList());
+            return "From [HttpPost]Details: filter on " + searchString;
         }
 
         //Sorting Method
