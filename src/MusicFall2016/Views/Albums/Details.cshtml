@@ -11,13 +11,18 @@
         </button>
     </div>
 </form>
-<form asp-action="Search" method="post">
+<form asp-action="Details" method="post">
     <div>
-        <input type="text" />
+        <input type="text" name="searchString" value="" />
         <button>
             Search
         </button>
     </div>
+</form>
+<form asp-action="Details" method="get">
+    <button>
+        Full List
+    </button>
 </form>
 <table class="table">
     <thead>
@@ -26,6 +31,7 @@
             <th>Artist</th>
             <th>Genre</th>
             <th>Price</th>
+            <th>Like</th>
         </tr>
     </thead>
     @foreach (var album in Model)
@@ -35,6 +41,7 @@
             <td>@album.Artist.Name</td>
             <td>@album.Genre.Name</td>
             <td>@album.Price</td>
+            <td>Put Likes Here</td>
             <td>
                 <a asp-action="Like" asp-route-id="@album.AlbumID">Like</a> |
                 <a asp-action="Update" asp-route-id="@album.AlbumID">Edit</a> |

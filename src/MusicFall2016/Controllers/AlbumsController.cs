@@ -4,6 +4,7 @@ using MusicFall2016.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -116,12 +117,32 @@ namespace MusicFall2016.Controllers
         }
         public IActionResult Like(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .SingleOrDefault(a => a.AlbumID == id);
+            if (albums == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Details");
         }
         [HttpPost]
-        public IActionResult Search()
+        public IActionResult Details(string searchString)
         {
-            return View();
+            var album = from m in _context.Albums
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                album = album.Where(s => s.Title.Contains(searchString));
+            }
+            
+            return View(album.Include(a => a.Artist).Include(a => a.Genre).ToList());
         }
 
         //Sorting Method
