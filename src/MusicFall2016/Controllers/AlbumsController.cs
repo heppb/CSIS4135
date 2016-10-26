@@ -118,6 +118,11 @@ namespace MusicFall2016.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Search()
+        {
+            return View();
+        }
 
         //Sorting Method
         //https://docs.asp.net/en/latest/data/ef-mvc/sort-filter-page.html?highlight=sorting
