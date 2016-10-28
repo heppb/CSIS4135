@@ -1,4 +1,10 @@
-﻿@model MusicFall2016.Models.Album
+﻿@model IEnumerable<MusicFall2016.Models.Album>
 @{
     ViewData["Title"] = "Albums Like";
 }
+@foreach (var album in Model)
+{
+    @album.Like = 0;
+}
+
+Making likes happen

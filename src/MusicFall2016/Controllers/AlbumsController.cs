@@ -143,6 +143,7 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
+            albums.Like = albums.Like + 1;
             return RedirectToAction("Details");
         }
         [HttpPost]
