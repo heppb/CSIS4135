@@ -166,9 +166,6 @@ namespace MusicFall2016.Controllers
                            select s;
             switch (sortOrder)
             {
-                case "name_desc":
-                    albums = albums.OrderByDescending(s => s.Title);
-                    break;
                 case "artist_desc":
                     albums = albums.OrderByDescending(s => s.Artist.Name);
                     break;
@@ -179,7 +176,7 @@ namespace MusicFall2016.Controllers
                     albums = albums.OrderByDescending(s => s.Price);
                     break;
                 case "like_desc":
-                    albums = albums.OrderByDescending(s => s.AlbumID);
+                    albums = albums.OrderByDescending(s => s.Like);
                     break;
                 default:
                     albums = albums.OrderBy(s => s.Title);
