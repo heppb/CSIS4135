@@ -154,29 +154,39 @@ namespace MusicFall2016.Controllers
         //Sorting Method
         //https://docs.asp.net/en/latest/data/ef-mvc/sort-filter-page.html?highlight=sorting
 
-        /*public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Sort(string sortOrder)
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            var students = from s in _context.Students
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["ArtistSortParm"] = String.IsNullOrEmpty(sortOrder) ? "artist_desc" : "";
+            ViewData["GenreSortParm"] = String.IsNullOrEmpty(sortOrder) ? "genre_desc" : "";
+            ViewData["PriceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "price_desc" : "";
+            ViewData["LikeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "like_desc" : "";
+
+            var albums = from s in _context.Albums.Include(a => a.Artist).Include(a => a.Genre)
                            select s;
             switch (sortOrder)
             {
                 case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
+                    albums = albums.OrderByDescending(s => s.Title);
                     break;
-                case "Date":
-                    students = students.OrderBy(s => s.EnrollmentDate);
+                case "artist_desc":
+                    albums = albums.OrderByDescending(s => s.Artist.Name);
                     break;
-                case "date_desc":
-                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                case "genre_desc":
+                    albums = albums.OrderByDescending(s => s.Genre.Name);
+                    break;
+                case "price_desc":
+                    albums = albums.OrderByDescending(s => s.Price);
+                    break;
+                case "like_desc":
+                    albums = albums.OrderByDescending(s => s.AlbumID);
                     break;
                 default:
-                    students = students.OrderBy(s => s.LastName);
+                    albums = albums.OrderBy(s => s.Title);
                     break;
             }
-            return View(await students.AsNoTracking().ToListAsync());
-        }*/
+            return View(await albums.AsNoTracking().ToListAsync());
+        }
 
         //Searching method
         // https://docs.asp.net/en/latest/tutorials/first-mvc-app/search.html
