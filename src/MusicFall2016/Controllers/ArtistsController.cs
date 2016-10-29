@@ -32,6 +32,14 @@ namespace MusicFall2016.Controllers
         {
             if (ModelState.IsValid)
             {
+                foreach (Artist artistTest in _context.Artists)
+                {
+                    var name = artistTest.Name;
+                    if (name == artist.Name)
+                    {
+                        return RedirectToAction("Create");
+                    }
+                }
                 _context.Artists.Add(artist);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
@@ -73,6 +81,14 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Update(Artist artist)
         {
+            foreach (Artist artistTest in _context.Artists)
+            {
+                var name = artistTest.Name;
+                if (name == artist.Name)
+                {
+                    return RedirectToAction("Update");
+                }
+            }
             _context.Artists.Update(artist);
             _context.SaveChanges();
             return RedirectToAction("Details");

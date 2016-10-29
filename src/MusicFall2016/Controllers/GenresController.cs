@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicFall2016.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,6 +35,14 @@ namespace MusicFall2016.Controllers
         {
             if (ModelState.IsValid)
             {
+                foreach (Genre genreTest in _context.Genres) 
+                {
+                    var name = genreTest.Name;
+                    if (name == genre.Name)
+                    {
+                        return RedirectToAction("Create");
+                    }
+                }
                 _context.Genres.Add(genre);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
@@ -75,7 +84,15 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Update(Genre genre)
         {
-                _context.Genres.Update(genre);
+            foreach (Genre genreTest in _context.Genres)
+            {
+                var name = genreTest.Name;
+                if (name == genre.Name)
+                {
+                    return RedirectToAction("Update");
+                }
+            }
+            _context.Genres.Update(genre);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
         }
