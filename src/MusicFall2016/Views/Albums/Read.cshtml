@@ -3,13 +3,19 @@
     ViewData["Title"] = "Albums Read";
 }
 <h2>Information for @Model.Title</h2>
-<form action="/" method="post">
-    <p>Title: @Model.Title</p>
-    <p>Artist Name: @Model.Artist.Name</p>
-    <p>Artist Bio: @Model.Artist.Bio</p>
-    <p>Genre: @Model.Genre.Name</p>
-    <p>Price: @Model.Price</p>
+<p>Title: @Model.Title</p>
+<p>Artist Name: @Model.Artist.Name</p>
+<p>Artist Bio: @Model.Artist.Bio</p>
+<p>Genre: @Model.Genre.Name</p>
+<p>Price: @Model.Price</p>
+<p>Likes: @Model.Like</p>
+
+<form asp-action="Like" asp-route-id="@Model.AlbumID">
+    <button>
+        <div>Like</div>
+    </button>
 </form>
+
 <form action="/Albums/Details" method="get">
     <button id="backButton">
         Back to List
