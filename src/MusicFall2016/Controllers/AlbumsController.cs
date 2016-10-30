@@ -23,15 +23,17 @@ namespace MusicFall2016.Controllers
         {
             if(searchString != null)
             {
-                var album = from m in _context.Albums
+                var album = from m in _context.Albums.Include(a => a.Artist).Include(a => a.Genre)
                             select m;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                album = album.Where(s => s.Title.Contains(searchString));
-            }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    album = album.Where(s => s.Title.Contains(searchString));
+                    //album = album.Where(s => s.Artist.Name.Contains(searchString));
+                    //album = album.Where(s => s.Genre.Name.Contains(searchString));
+                }
 
-            return View(album.Include(a => a.Artist).Include(a => a.Genre).ToList());
+                return View(album.ToList());
             }
             else {
             var albums = _context.Albums

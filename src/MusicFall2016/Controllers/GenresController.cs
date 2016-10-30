@@ -93,8 +93,8 @@ namespace MusicFall2016.Controllers
                 }
             }
             _context.Genres.Update(genre);
-                _context.SaveChanges();
-                return RedirectToAction("Details");
+            _context.SaveChanges();
+            return RedirectToAction("Details");
         }
         public IActionResult Albums(int? id)
         {
