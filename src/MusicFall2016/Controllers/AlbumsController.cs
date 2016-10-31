@@ -28,9 +28,7 @@ namespace MusicFall2016.Controllers
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    album = album.Where(s => s.Title.Contains(searchString));
-                    //album = album.Where(s => s.Artist.Name.Contains(searchString));
-                    //album = album.Where(s => s.Genre.Name.Contains(searchString));
+                    album = album.Where(s => s.Title.Contains(searchString) || s.Artist.Name.Contains(searchString) || s.Genre.Name.Contains(searchString));
                 }
 
                 return View(album.ToList());
