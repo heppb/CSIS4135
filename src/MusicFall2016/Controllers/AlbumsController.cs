@@ -156,13 +156,13 @@ namespace MusicFall2016.Controllers
         //Sorting Method
         //https://docs.asp.net/en/latest/data/ef-mvc/sort-filter-page.html?highlight=sorting
 
-        public async Task<IActionResult> Sort(string sortOrder)
+        public async Task<IActionResult> Sort(string sortOrder , string sortOrderArtist , string sortOrderGenre , string sortOrderPrice , string sortOrderLike)
         { 
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_asc" : "";
-            ViewData["ArtistSortParm"] = String.IsNullOrEmpty(sortOrder) ? "artist_asc" : "";
-            ViewData["GenreSortParm"] = String.IsNullOrEmpty(sortOrder) ? "genre_asc" : "";
-            ViewData["PriceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "price_asc" : "";
-            ViewData["LikeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "like_asc" : "" ;
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_asc" : "title_desc";
+            ViewData["ArtistSortParm"] = String.IsNullOrEmpty(sortOrderArtist) ? "artist_asc" : "artist_desc";
+            ViewData["GenreSortParm"] = String.IsNullOrEmpty(sortOrderGenre) ? "genre_asc" : "genre_desc";
+            ViewData["PriceSortParm"] = String.IsNullOrEmpty(sortOrderPrice) ? "price_asc" : "price_desc";
+            ViewData["LikeSortParm"] = String.IsNullOrEmpty(sortOrderLike) ? "like_asc" : "like_desc" ;
 
             var albums = from s in _context.Albums.Include(a => a.Artist).Include(a => a.Genre)
                            select s;
@@ -171,26 +171,29 @@ namespace MusicFall2016.Controllers
                 case "title_asc":
                     albums = albums.OrderBy(s => s.Title);
                     break;
+                case "title_desc":
+                    albums = albums.OrderByDescending(s => s.Title);
+                    break;
                 case "artist_asc":
                     albums = albums.OrderBy(s => s.Artist.Name);
-                    break;
-                case "genre_asc":
-                    albums = albums.OrderBy(s => s.Genre.Name);
-                    break;
-                case "price_asc":
-                    albums = albums.OrderBy(s => s.Price);
-                    break;
-                case "like_asc":
-                    albums = albums.OrderBy(s => s.Like);
                     break;
                 case "artist_desc":
                     albums = albums.OrderByDescending(s => s.Artist.Name);
                     break;
+                case "genre_asc":
+                    albums = albums.OrderBy(s => s.Genre.Name);
+                    break;
                 case "genre_desc":
                     albums = albums.OrderByDescending(s => s.Genre.Name);
                     break;
+                case "price_asc":
+                    albums = albums.OrderBy(s => s.Price);
+                    break;
                 case "price_desc":
                     albums = albums.OrderByDescending(s => s.Price);
+                    break;
+                case "like_asc":
+                    albums = albums.OrderBy(s => s.Like);
                     break;
                 case "like_desc":
                     albums = albums.OrderByDescending(s => s.Like);
