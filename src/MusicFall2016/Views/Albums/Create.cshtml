@@ -10,9 +10,13 @@
         
         <div>Artist <p><select asp-for="ArtistID" asp-items="ViewBag.ArtistList" data-val="true" data-val-required="The Artist field is required." id="ArtistID" name="ArtistID" class="btn-lg"></select></p></div>
         <span asp-validation-for="ArtistID" class="text-danger"></span>
+
+        <div> Or Create New Artist <p> <input type="text" name="artistFill"/></p></div>
         
         <div>Genre <p><select asp-for="GenreID" asp-items="ViewBag.GenreList" data-val="true" data-val-required="The Genre field is required." id="GenreID" name="GenreID" class="btn-lg"></select></p></div>
         <span asp-validation-for="GenreID" class="text-danger"></span>
+
+        <div> Or Create New Genre <p><input type="text" name="genreFill"/></p></div>
         
         <div>Price <p><input type="text" asp-for="Price" value=""></p></div>
         <span asp-validation-for="Price" class="text-danger"></span>
@@ -30,8 +34,3 @@
          </button>
     </div>
 </form>
-
-<div> Or Create New Artist <p> <input type="text" asp-for="Artist.Name" /></p></div>
-<span asp-validation-for="ArtistID" class="text-danger"></span>
-<div> Or Create New Genre <p><input type="text" asp-for="Genre.Name" /></p></div>
-<span asp-validation-for="GenreID" class="text-danger"></span>

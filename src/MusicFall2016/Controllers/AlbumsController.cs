@@ -47,10 +47,22 @@ namespace MusicFall2016.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Album album)
+        public IActionResult Create(Album album , string artistFill , string genreFill)
         {
             if (ModelState.IsValid)
             {
+                if (artistFill != null)
+                {
+                    Artist artist = new Artist();
+                    artist.Name = artistFill;
+                    //album.Artist = artist;
+                }
+                if (genreFill != null)
+                {
+                    Genre genre = new Genre();
+                    genre.Name = genreFill;
+                   // album.Genre = genre;
+                }
                 _context.Albums.Add(album);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
