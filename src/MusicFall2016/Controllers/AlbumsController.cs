@@ -51,19 +51,17 @@ namespace MusicFall2016.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Albums.Add(album);
                 if (artistFill != null)
                 {
                     Artist artist = new Artist();
-                    artist.Name = artistFill;
                     album.ArtistID = artist.ArtistID;
                 }
                 if (genreFill != null)
                 {
                     Genre genre = new Genre();
-                    genre.Name = genreFill;
                     album.GenreID = genre.GenreID;
                 }
+                _context.Albums.Add(album);
                 _context.SaveChanges();
                 return RedirectToAction("Details");
             }

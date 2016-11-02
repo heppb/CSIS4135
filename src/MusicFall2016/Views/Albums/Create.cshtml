@@ -7,16 +7,16 @@
     <div>
         <div>Title <p><input type="text" id="Title" asp-for="Title" value="" /></p></div>
         <span asp-validation-for="Title" class="text-danger"></span>
-        
+
         <div>Artist <p><select asp-for="ArtistID" asp-items="ViewBag.ArtistList" data-val="true" data-val-required="The Artist field is required." id="ArtistID" name="ArtistID" class="btn-lg"></select></p></div>
         <span asp-validation-for="ArtistID" class="text-danger"></span>
 
-        <div> Or Create New Artist <p> <input type="text" name="artistFill"/></p></div>
+        <div> Or Create New Artist <p> <input type="text" name="artistFill" asp-for="Artist.Name"/></p></div>
         
         <div>Genre <p><select asp-for="GenreID" asp-items="ViewBag.GenreList" data-val="true" data-val-required="The Genre field is required." id="GenreID" name="GenreID" class="btn-lg"></select></p></div>
         <span asp-validation-for="GenreID" class="text-danger"></span>
 
-        <div> Or Create New Genre <p><input type="text" name="genreFill"/></p></div>
+        <div> Or Create New Genre <p><input type="text" name="genreFill" asp-for="Genre.Name"/></p></div>
         
         <div>Price <p><input type="text" asp-for="Price" value=""></p></div>
         <span asp-validation-for="Price" class="text-danger"></span>
