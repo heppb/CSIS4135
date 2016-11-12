@@ -112,12 +112,24 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
+            var recAlbumList = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .ToList();
+            var recAlbums = "";
+            var count = 0;
+            foreach (var album in recAlbumList)
+            {
+                if (count < 5 && album.AlbumID != albums.AlbumID && album.ArtistID == albums.ArtistID ||  album.GenreID == albums.GenreID)
+                {
+                    count = count + 1;
+                    recAlbums = recAlbums + album.Title + " ";
+                }
+            }
+            ViewData["recAlbums"] = recAlbums;
+
             return View(albums);
         }
-        /*public IActionResult Update()
-        {
-            return View();
-        }*/
         public IActionResult Update(int? id)
         {
             if (id == null)
