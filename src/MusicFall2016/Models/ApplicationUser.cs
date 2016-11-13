@@ -15,6 +15,7 @@ namespace MusicFall2016.Models
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
+        public bool RememberMe { get; internal set; }
     }
     public class ApplicationUser : IdentityUser
     {

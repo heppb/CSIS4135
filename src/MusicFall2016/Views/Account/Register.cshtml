@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MusicFall2016.Models.ApplicationUserViewModel
 @{
+    ViewData["Title"] = "Login";
 }
+<h2>
+    Register
+</h2>
+<h3>
+    Create a New Account
+</h3>
+<form asp-action="Register" method="post">
+    <div>
+        <div>Email <p><input type="text" asp-for="Email" value="" /></p></div>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <div>Password <p><input type="text" asp-for="Password" value=""></p></div>
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <div>Confirm Password <p><input type="text" asp-for="ConfirmPassword" value="" /></p></div>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div>
+        <button id="createButton">
+            Register
+        </button>
+    </div>
+</form>
+<h2>
+    Login
+</h2>
+<form asp-action="Login" method="post">
+    <div>Email <p><input type="text" asp-for="Email" value="" /></p></div>
+    <span asp-validation-for="Email" class="text-danger"></span>
+    <div>Password <p><input type="text" asp-for="Password" value=""></p></div>
+    <span asp-validation-for="Password" class="text-danger"></span>
+    <button id="createButton">
+        Login
+    </button>
+</form>
