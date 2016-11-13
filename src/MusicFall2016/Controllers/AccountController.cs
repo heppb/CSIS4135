@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MusicFall2016.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,11 +16,14 @@ namespace MusicFall2016.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly MusicDbContext _context;
 
-        public AccountController()
+        public AccountController(UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager, MusicDbContext context)
         {
-            UserManager<ApplicationUser> _userManager;
-            SignInManager<ApplicationUser> _signInManager;
+            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         public IActionResult Register()
         {
@@ -75,6 +80,28 @@ namespace MusicFall2016.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        [Authorize]
+        public IActionResult Playlists(int? id)
+        {
+             if (id == null)
+            {
+                return NotFound();
+            }
+            var albums = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre)
+                .SingleOrDefault(a => a.AlbumID == id);
+            if (albums == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Playlists(Album album)
+        {
+            return View();
         }
     }
 }

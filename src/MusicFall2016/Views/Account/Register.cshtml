@@ -1,6 +1,6 @@
 ﻿@model MusicFall2016.Models.ApplicationUserViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
 }
 <h2>
     Register
@@ -22,16 +22,4 @@
             Register
         </button>
     </div>
-</form>
-<h2>
-    Login
-</h2>
-<form asp-action="Login" method="post">
-    <div>Email <p><input type="text" asp-for="Email" value="" /></p></div>
-    <span asp-validation-for="Email" class="text-danger"></span>
-    <div>Password <p><input type="text" asp-for="Password" value=""></p></div>
-    <span asp-validation-for="Password" class="text-danger"></span>
-    <button id="createButton">
-        Login
-    </button>
 </form>

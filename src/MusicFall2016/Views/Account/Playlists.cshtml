@@ -1,0 +1,17 @@
+﻿@model MusicFall2016.Models.Album
+@{
+    ViewData["Title"] = "User Playlists";
+}
+<h2>Information for @Model.Title</h2>
+<p>Title: @Model.Title</p>
+<p>Artist Name: @Model.Artist.Name</p>
+<p>Artist Bio: @Model.Artist.Bio</p>
+<p>Genre: @Model.Genre.Name</p>
+<p>Price: @Model.Price</p>
+<p>Likes: @Model.Like</p>
+
+<form asp-action="Playlists" method="post">
+    <button>
+        <p>Click to Add @Model.Title to Playlist</p>
+    </button>
+</form>

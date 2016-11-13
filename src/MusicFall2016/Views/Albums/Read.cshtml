@@ -15,6 +15,11 @@
         <div>Like</div>
     </button>
 </form>
+<form asp-controller="Account" asp-action="Playlists" asp-route-id="@Model.AlbumID">
+    <button>
+        <div>Add To Playlists</div>
+    </button>
+</form>
 
 <p>
     Recommendations:

@@ -19,5 +19,7 @@ namespace MusicFall2016.Models
     }
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        public DateTime DateJoined { get; set; }
     }
 }

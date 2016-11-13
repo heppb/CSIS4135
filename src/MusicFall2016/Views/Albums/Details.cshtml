@@ -64,7 +64,8 @@
                 <a asp-action="Like" asp-route-id="@album.AlbumID">Like</a> |
                 <a asp-action="Update" asp-route-id="@album.AlbumID">Edit</a> |
                 <a asp-action="Read" asp-route-id="@album.AlbumID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@album.AlbumID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@album.AlbumID">Delete</a> |
+                <a asp-controller="Account" asp-action="Playlists" asp-route-id="@album.AlbumID"> Add to PlayList</a>
             </td>
         </tr>
     }
