@@ -8,9 +8,10 @@ using MusicFall2016.Models;
 namespace MusicFall2016.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161114165403_playlistdbUpdate")]
+    partial class playlistdbUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -233,32 +234,11 @@ namespace MusicFall2016.Migrations
                     b.Property<int>("PlaylistID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("PlaylistName");
-
-                    b.Property<int>("UserID");
-
-                    b.Property<string>("UserId");
+                    b.Property<int>("AlbumID");
 
                     b.HasKey("PlaylistID");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Playlists");
-                });
-
-            modelBuilder.Entity("MusicFall2016.Models.PlaylistConnect", b =>
-                {
-                    b.Property<int>("PlaylistID");
-
-                    b.Property<int>("AlbumID");
-
-                    b.HasKey("PlaylistID", "AlbumID");
-
-                    b.HasIndex("AlbumID");
-
-                    b.HasIndex("PlaylistID");
-
-                    b.ToTable("PlaylistConnect");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -308,26 +288,6 @@ namespace MusicFall2016.Migrations
                     b.HasOne("MusicFall2016.Models.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MusicFall2016.Models.Playlist", b =>
-                {
-                    b.HasOne("MusicFall2016.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MusicFall2016.Models.PlaylistConnect", b =>
-                {
-                    b.HasOne("MusicFall2016.Models.Album", "Album")
-                        .WithMany("PlaylistList")
-                        .HasForeignKey("AlbumID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MusicFall2016.Models.Playlist", "Playlist")
-                        .WithMany("PlaylistList")
-                        .HasForeignKey("PlaylistID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

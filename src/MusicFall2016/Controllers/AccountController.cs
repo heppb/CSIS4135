@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MusicFall2016.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,11 +27,13 @@ namespace MusicFall2016.Controllers
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(ApplicationUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -45,12 +44,18 @@ namespace MusicFall2016.Controllers
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    //_logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
+                //AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        public IActionResult Login()
+        {
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Login(ApplicationUserViewModel model, string returnUrl = null)
@@ -75,6 +80,10 @@ namespace MusicFall2016.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        public IActionResult Logoff()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> LogOff()
         {
@@ -82,26 +91,39 @@ namespace MusicFall2016.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         [Authorize]
-        public IActionResult Playlists(int? id)
+        public IActionResult Playlists()
         {
-             if (id == null)
+            int id = 0;
+            var user = _userManager.GetUserId(User);
+            if (user == null)
             {
                 return NotFound();
             }
-            var albums = _context.Albums
-                .Include(a => a.Artist)
-                .Include(a => a.Genre)
-                .SingleOrDefault(a => a.AlbumID == id);
-            if (albums == null)
+            var playlist = _context.Playlists.SingleOrDefault(a => a.PlaylistID == id);
+            if (playlist == null)
             {
                 return NotFound();
             }
-            return View();
+            return View(playlist);
         }
         [HttpPost]
-        public IActionResult Playlists(Album album)
+        public IActionResult Playlists(Album album, int id)
         {
-            return View();
+            var user = _userManager.GetUserId(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var playlist = new Playlist();
+            playlist.PlaylistID = id;
+            playlist.User.Id = _userManager.GetUserId(User);
+            var connect = new PlaylistConnect();
+            connect.AlbumID = album.AlbumID;
+            connect.PlaylistID = playlist.PlaylistID;
+            playlist.PlaylistList.Add(connect);
+            _context.Playlists.Add(playlist);
+            _context.SaveChanges();
+            return RedirectToAction("Playlists");
         }
     }
 }

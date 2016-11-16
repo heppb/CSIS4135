@@ -38,9 +38,8 @@
                     <li><a asp-area="" asp-controller="Artists" asp-action="Details">Artists</a></li>
                     <li><a asp-area="" asp-controller="Genres" asp-action="Details">Genres</a></li>
                     <li><a asp-area="" asp-controller="Account" asp-action="Playlists">Playlists</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Login/Register</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Logoff">Logoff</a></li>
                 </ul>
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </div>

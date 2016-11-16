@@ -42,6 +42,11 @@ namespace MusicFall2016
             services.AddDbContext<MusicDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            /*services.AddEntityFramework()
+            .AddSqlServer()
+            .AddDbContext<IdentityDbContext>(options =>
+            options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));*/
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<MusicDbContext>()
             .AddDefaultTokenProviders();
@@ -53,7 +58,7 @@ namespace MusicFall2016
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
+                options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
 
                 // Lockout settings
@@ -61,7 +66,7 @@ namespace MusicFall2016
                 options.Lockout.MaxFailedAccessAttempts = 100;
 
                 // Cookie settings
-                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                //options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
                 options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
                 options.Cookies.ApplicationCookie.LogoutPath = "/Account/Logoff";
 
