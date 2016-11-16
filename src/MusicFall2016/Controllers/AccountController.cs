@@ -93,17 +93,12 @@ namespace MusicFall2016.Controllers
         [Authorize]
         public IActionResult Playlists()
         {
-            int id = 0;
-            var user = _userManager.GetUserId(User);
+            var user = User.Identity.Name;
             if (user == null)
             {
                 return NotFound();
             }
-            var playlist = _context.Playlists.SingleOrDefault(a => a.PlaylistID == id);
-            if (playlist == null)
-            {
-                return NotFound();
-            }
+            var playlist = _context.Playlists.SingleOrDefault(a => a.User.UserName == user);
             return View(playlist);
         }
         [HttpPost]

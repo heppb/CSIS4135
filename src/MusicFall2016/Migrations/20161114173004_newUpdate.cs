@@ -37,20 +37,9 @@ namespace MusicFall2016.Migrations
                 });
 
             migrationBuilder.AddColumn<string>(
-                name: "PlaylistName",
-                table: "Playlists",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserID",
-                table: "Playlists",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
                 name: "UserId",
                 table: "Playlists",
-                nullable: true);
+                nullable: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Playlists_UserId",

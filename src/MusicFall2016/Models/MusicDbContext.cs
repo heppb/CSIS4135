@@ -32,8 +32,8 @@ namespace MusicFall2016.Models
 
             modelBuilder.Entity<PlaylistConnect>()
                 .HasOne(pt => pt.Album)
-                .WithMany(t => t.PlaylistList)
-                .HasForeignKey(pt => pt.AlbumID);
+                .WithMany(t => t.PlaylistList);
+                //.HasForeignKey(pt => pt.AlbumID);
         }
     }
 }
