@@ -13,3 +13,17 @@
         Click to Add An Album to Playlist
     </button>
 </form>
+@foreach (var album in Model.PlaylistList)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => album.PlaylistID)
+        </td>
+   </tr>
+}
+
+<p>
+    User: @User.Identity.Name
+
+    Date Joined: 
+</p>
