@@ -109,8 +109,6 @@ namespace MusicFall2016.Controllers
                 _context.SaveChanges();
                 playlist = _context.Playlists.SingleOrDefault(a => a.User.UserName == user);
             }
-            var connect = new PlaylistConnect();
-            connect.Playlist = playlist;
             var list = new SelectList(_context.Albums, "AlbumID", "Title");
             ViewBag.AlbumList = list;
             return View(playlist);
