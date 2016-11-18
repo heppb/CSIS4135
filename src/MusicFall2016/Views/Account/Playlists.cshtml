@@ -8,22 +8,28 @@
 </h2>
 <p></p>
 
-<form asp-action="Playlists" method="post">
+<form asp-action="CreatePlaylist" method="get">
     <button>
         Click to Add An Album to Playlist
     </button>
 </form>
-@foreach (var album in Model.PlaylistList)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => album.PlaylistID)
-        </td>
-   </tr>
-}
-
-<p>
-    User: @User.Identity.Name
-
-    Date Joined: 
-</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Albums
+            </th>
+        </tr>
+    </thead>
+        <tr>
+            <td>
+                <div>Albums <p><select asp-items="ViewBag.AlbumList" class="btn-lg"></select></p></div>
+            </td>
+        </tr>
+</table>
+    <p>
+        User: @User.Identity.Name
+    </p>
+    <p>
+        Date Joined: 11/17/16
+    </p>

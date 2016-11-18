@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MusicFall2016.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,6 +45,7 @@ namespace MusicFall2016.Controllers
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    user.DateJoined = System.DateTime.Today;
                     //_logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
@@ -99,26 +101,37 @@ namespace MusicFall2016.Controllers
                 return NotFound();
             }
             var playlist = _context.Playlists.SingleOrDefault(a => a.User.UserName == user);
+            if (playlist == null)
+            {
+                playlist = new Playlist();
+                playlist.User.UserName = user;
+                _context.Playlists.Add(playlist);
+                _context.SaveChanges();
+                playlist = _context.Playlists.SingleOrDefault(a => a.User.UserName == user);
+            }
+            var connect = new PlaylistConnect();
+            connect.Playlist = playlist;
+            var list = new SelectList(_context.Albums, "AlbumID", "Title");
+            ViewBag.AlbumList = list;
             return View(playlist);
         }
         [HttpPost]
-        public IActionResult Playlists(Album album, int id)
+        public IActionResult Playlists(Album album)
         {
-            var user = _userManager.GetUserId(User);
+            var user = User.Identity.Name;
             if (user == null)
             {
                 return NotFound();
             }
-            var playlist = new Playlist();
-            playlist.PlaylistID = id;
-            playlist.User.Id = _userManager.GetUserId(User);
-            var connect = new PlaylistConnect();
-            connect.AlbumID = album.AlbumID;
-            connect.PlaylistID = playlist.PlaylistID;
-            playlist.PlaylistList.Add(connect);
-            _context.Playlists.Add(playlist);
-            _context.SaveChanges();
-            return RedirectToAction("Playlists");
+            var playlist = _context.Playlists.SingleOrDefault(a => a.User.UserName == user);
+            var list = new SelectList(_context.Albums, "AlbumID", "Title");
+            ViewBag.AlbumList = list;
+            return View("Playlists");
+        }
+        public IActionResult CreatePlaylist()
+        {
+            ViewBag.AlbumList = new SelectList(_context.Albums, "AlbumID", "Title");
+            return View();
         }
     }
 }
