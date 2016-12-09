@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using EventManager.Models;
 using EventManager.Models.AccountViewModels;
 using EventManager.Services;
+using EventManager.Data;
 
 namespace EventManager.Controllers
 {
@@ -22,21 +23,42 @@ namespace EventManager.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
+
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _context = context;
         }
+        [Authorize(Roles = "ARTIST")]
+        public IActionResult AddEvent()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "ARTIST")]
+        public IActionResult AddEvent(Events newEvent)
+        {
+            if (ModelState.IsValid)
+            {
 
+                _context.Events.Add(newEvent);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            return View();
+        }
         //
         // GET: /Account/Login
         [HttpGet]
@@ -94,6 +116,13 @@ namespace EventManager.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ArtistRegister(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
         //
         // POST: /Account/Register
@@ -115,6 +144,36 @@ namespace EventManager.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _userManager.AddToRoleAsync(user, "USER");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation(3, "User created a new account with password.");
+                    return RedirectToLocal(returnUrl);
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ArtistRegister(RegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Name, Email = model.Email};
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _userManager.AddToRoleAsync(user, "ARTIST");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);

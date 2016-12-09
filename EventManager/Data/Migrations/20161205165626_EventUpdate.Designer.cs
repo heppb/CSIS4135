@@ -8,9 +8,10 @@ using EventManager.Data;
 namespace EventManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161205165626_EventUpdate")]
+    partial class EventUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -73,15 +74,7 @@ namespace EventManager.Data.Migrations
                     b.Property<string>("ArtistName")
                         .IsRequired();
 
-                    b.Property<DateTime>("EventDate");
-
                     b.Property<string>("EventName")
-                        .IsRequired();
-
-                    b.Property<string>("Genre")
-                        .IsRequired();
-
-                    b.Property<string>("Location")
                         .IsRequired();
 
                     b.HasKey("EventsID");
