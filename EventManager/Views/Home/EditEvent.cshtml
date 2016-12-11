@@ -1,0 +1,32 @@
+﻿@model EventManager.Models.Events
+@{
+    ViewData["Title"] = "Edit Event Page";
+}
+@inject UserManager<ApplicationUser> UserManager
+<h2>Event Update</h2>
+<form asp-action="EditEvent" method="post">
+    <div>
+        <input type="hidden" asp-for="EventsID" value="@Model.EventsID">
+        <div>EventName <p><input type="text" id="EventName" asp-for="EventName" value="" /></p></div>
+        <span asp-validation-for="EventName" class="text-danger"></span>
+        <input type="hidden" asp-for="ArtistName" value=@UserManager.GetUserName(User)>
+        <div>EventDate <p><input type="date" id="EventDate" asp-for="EventDate" value="" /></p></div>
+        <span asp-validation-for="EventDate" class="text-danger"></span>
+        <div>EventLocation <p><input type="text" id="Location" asp-for="Location" value="" /></p></div>
+        <span asp-validation-for="Location" class="text-danger"></span>
+        <div>EventGenre <p><input type="text" id="Genre" asp-for="Genre" value="" /></p></div>
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+    <div>
+        <button>
+            Save Updates
+        </button>
+    </div>
+</form>
+<form action="Index" method="get">
+    <div>
+        <button>
+            Back to Home
+        </button>
+    </div>
+</form>

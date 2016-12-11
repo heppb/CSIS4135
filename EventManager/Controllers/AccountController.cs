@@ -41,24 +41,6 @@ namespace EventManager.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
             _context = context;
         }
-        [Authorize(Roles = "ARTIST")]
-        public IActionResult AddEvent()
-        {
-            return View();
-        }
-        [HttpPost]
-        [Authorize(Roles = "ARTIST")]
-        public IActionResult AddEvent(Events newEvent)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.Events.Add(newEvent);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-            return View();
-        }
         //
         // GET: /Account/Login
         [HttpGet]
@@ -79,27 +61,65 @@ namespace EventManager.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                string loginName = "";
+                foreach (ApplicationUser user in _userManager.Users)
+                {
+                    if (user.Email == model.Email)
+                    {
+                        if (user.UserName != model.Email)
+                        {
+                            loginName = user.UserName;
+                        }
+                    }
+
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                if (loginName == "")
                 {
-                    _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning(2, "User account locked out.");
-                    return View("Lockout");
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation(1, "User logged in.");
+                        return RedirectToLocal(returnUrl);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning(2, "User account locked out.");
+                        return View("Lockout");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    var result = await _signInManager.PasswordSignInAsync(loginName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation(1, "User logged in.");
+                        return RedirectToLocal(returnUrl);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning(2, "User account locked out.");
+                        return View("Lockout");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return View(model);
+                    }
                 }
             }
 

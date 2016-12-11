@@ -1,0 +1,22 @@
+﻿@model IEnumerable<EventManager.Models.Events>
+@{
+    ViewData["Title"] = "Follow Artist Page";
+}
+@inject UserManager<ApplicationUser> UserManager
+<h2>Artists Followed</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Artists
+            </th>
+            <th>
+               Events 
+            </th>
+        </tr>
+    </thead>
+    @foreach (var events in Model)
+    {
+        
+    }
+</table>

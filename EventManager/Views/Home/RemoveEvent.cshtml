@@ -1,0 +1,18 @@
+﻿@model EventManager.Models.Events
+@{
+    ViewData["Title"] = "Remove Event Page";
+}
+<form asp-action="RemoveEvent" method="post">
+    <input type="hidden" asp-for="EventsID" value="@Model.EventsID">
+    <div>Event: @Model.EventName</div>
+    <div>
+        <button>
+            Delete
+        </button>
+    </div>
+</form>
+<form action="Index" method="get">
+    <button id="backButton">
+        Back to Home
+    </button>
+</form>
