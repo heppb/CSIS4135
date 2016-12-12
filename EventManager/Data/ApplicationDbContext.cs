@@ -17,6 +17,7 @@ namespace EventManager.Data
 
         public DbSet<Events> Events { get; set; }
         public DbSet<FollowedArtists> FollowedArtists { get; set; }
+        public DbSet<UserEvents> UserEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

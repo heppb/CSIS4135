@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventManager.Models.Events>
+﻿@model EventManager.Models.FollowedArtists
 @{
     ViewData["Title"] = "Follow Artist Page";
 }
@@ -15,4 +15,22 @@
             </th>
         </tr>
     </thead>
+    @foreach (var name in Model.Artists)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => name.UserName)
+            </td>
+            <td>
+                Events Go Here
+            </td>
+        </tr>
+    }
 </table>
+<form asp-action="Index" method="get" value="">
+    <div>
+        <button>
+            Back to Home
+        </button>
+    </div>
+</form>

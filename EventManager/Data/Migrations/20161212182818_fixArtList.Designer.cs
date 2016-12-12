@@ -8,9 +8,10 @@ using EventManager.Data;
 namespace EventManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161212182818_fixArtList")]
+    partial class fixArtList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -102,8 +103,6 @@ namespace EventManager.Data.Migrations
                     b.Property<int>("FollowedArtistsID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("UserID");
-
                     b.Property<string>("UserOfListId");
 
                     b.HasKey("FollowedArtistsID");
@@ -118,11 +117,11 @@ namespace EventManager.Data.Migrations
                     b.Property<int>("UserEventsID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserId");
 
                     b.HasKey("UserEventsID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserEvents");
                 });
@@ -259,7 +258,7 @@ namespace EventManager.Data.Migrations
                 {
                     b.HasOne("EventManager.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

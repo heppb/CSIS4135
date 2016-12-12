@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventManager.Models.Events>
+﻿@model EventManager.Models.UserEvents
 @{
     ViewData["Title"] = "Events Calendar Page";
 }
@@ -25,25 +25,25 @@
                 </th>
             </tr>
         </thead>
-        @foreach (var events in Model)
+        @foreach (var Event in Model.Events)
         {
-            @if (events.EventDate > DateTime.Now)
+            @if (/*Event.EventDate > DateTime.Now */ true == true)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => events.EventName)
+                        @Html.DisplayFor(modelItem => Event.EventName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => events.ArtistName)
+                        @Html.DisplayFor(modelItem => Event.ArtistName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => events.EventDate)
+                        @Html.DisplayFor(modelItem => Event.EventDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => events.Location)
+                        @Html.DisplayFor(modelItem => Event.Location)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => events.Genre)
+                        @Html.DisplayFor(modelItem => Event.Genre)
                     </td>
                 </tr>
             }

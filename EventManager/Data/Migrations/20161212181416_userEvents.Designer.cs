@@ -8,9 +8,10 @@ using EventManager.Data;
 namespace EventManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161212181416_userEvents")]
+    partial class userEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -29,8 +30,6 @@ namespace EventManager.Data.Migrations
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<int?>("FollowedArtistsID");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -56,8 +55,6 @@ namespace EventManager.Data.Migrations
                         .HasAnnotation("MaxLength", 256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FollowedArtistsID");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -88,11 +85,7 @@ namespace EventManager.Data.Migrations
                     b.Property<string>("Location")
                         .IsRequired();
 
-                    b.Property<int?>("UserEventsID");
-
                     b.HasKey("EventsID");
-
-                    b.HasIndex("UserEventsID");
 
                     b.ToTable("Events");
                 });
@@ -102,29 +95,11 @@ namespace EventManager.Data.Migrations
                     b.Property<int>("FollowedArtistsID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("UserID");
-
-                    b.Property<string>("UserOfListId");
+                    b.Property<string>("UserOfList");
 
                     b.HasKey("FollowedArtistsID");
 
-                    b.HasIndex("UserOfListId");
-
                     b.ToTable("FollowedArtists");
-                });
-
-            modelBuilder.Entity("EventManager.Models.UserEvents", b =>
-                {
-                    b.Property<int>("UserEventsID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("UserID");
-
-                    b.HasKey("UserEventsID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UserEvents");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -232,34 +207,6 @@ namespace EventManager.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("EventManager.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("EventManager.Models.FollowedArtists")
-                        .WithMany("Artists")
-                        .HasForeignKey("FollowedArtistsID");
-                });
-
-            modelBuilder.Entity("EventManager.Models.Events", b =>
-                {
-                    b.HasOne("EventManager.Models.UserEvents")
-                        .WithMany("Events")
-                        .HasForeignKey("UserEventsID");
-                });
-
-            modelBuilder.Entity("EventManager.Models.FollowedArtists", b =>
-                {
-                    b.HasOne("EventManager.Models.ApplicationUser", "UserOfList")
-                        .WithMany()
-                        .HasForeignKey("UserOfListId");
-                });
-
-            modelBuilder.Entity("EventManager.Models.UserEvents", b =>
-                {
-                    b.HasOne("EventManager.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

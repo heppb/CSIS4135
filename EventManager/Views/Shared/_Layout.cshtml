@@ -34,6 +34,14 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if(User.IsInRole("ARTIST") == true || User.IsInRole("USER") == true)
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Follow">My Followed Artists</a></li>
+                    }
+                    @if (User.IsInRole("ARTIST") == true || User.IsInRole("USER") == true)
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="EventSub">My Events Calendar</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

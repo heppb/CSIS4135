@@ -8,9 +8,10 @@ using EventManager.Data;
 namespace EventManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161212202017_userIDAdd")]
+    partial class userIDAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -101,8 +102,6 @@ namespace EventManager.Data.Migrations
                 {
                     b.Property<int>("FollowedArtistsID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("UserID");
 
                     b.Property<string>("UserOfListId");
 
