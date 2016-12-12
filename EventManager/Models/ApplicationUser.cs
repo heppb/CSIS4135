@@ -9,6 +9,6 @@ namespace EventManager.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
-        //public List<ApplicationUser> ArtistList { get; set; }
+        //public List<Events> userEvents { get; set; }
     }
 }

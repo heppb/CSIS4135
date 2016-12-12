@@ -78,7 +78,9 @@ namespace EventManager.Controllers
         [Authorize]
         public IActionResult EventSub(int? id)
         {
-            return View();
+            var events = _context.Events;
+            ViewBag.EventList = new SelectList(_context.Events, "EventName", "ArtistName");
+            return View(events);
         }
         [HttpPost]
         [Authorize]
@@ -89,7 +91,22 @@ namespace EventManager.Controllers
         [Authorize]
         public IActionResult Follow(int? id)
         {
-            return View();
+            /* userName = _userManager.GetUserName(User);
+            if (userName == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            Events events = _context.Events.SingleOrDefault(a => a.EventsID == id);
+            foreach (ApplicationUser user in _userManager.Users)
+            {
+                if (events.ArtistName == user.UserName && id == events.EventsID)
+                {
+                    FollowedArtists artistList = _context.FollowedArtists.SingleOrDefault(a => a.UserOfList == userName);
+                    artistList.Artists.Add(user);
+                    return View(artistList);
+                }
+            }*/
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         [HttpPost]
         [Authorize]
@@ -112,7 +129,7 @@ namespace EventManager.Controllers
             ViewBag.EventList = new SelectList(_context.Events, "EventName", "ArtistName");
             return View(events);
         }*/
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, string Sorting)
         {
             if (searchString != null)
             {
@@ -126,6 +143,22 @@ namespace EventManager.Controllers
 
                 return View(events);
             }
+            if(Sorting != null)
+            {
+                var name = _userManager.GetUserName(User);
+                var events = from m in _context.Events
+                             select m;
+
+                if (!String.IsNullOrEmpty(name))
+                {
+                    events = events.Where(s => s.ArtistName.Contains(name));
+                }
+                if(events != null)
+                {
+                    return View(events);
+                }
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
             else
             {
                 var events = _context.Events;
@@ -133,7 +166,6 @@ namespace EventManager.Controllers
                 return View(events);
             }
         }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

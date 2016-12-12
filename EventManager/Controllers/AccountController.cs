@@ -155,6 +155,7 @@ namespace EventManager.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var newArtistList = new FollowedArtists { UserOfList = model.Email , /*FollowedArtistsID = user.Id*/};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -184,6 +185,7 @@ namespace EventManager.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Name, Email = model.Email};
+                var newArtistList = new FollowedArtists { UserOfList = model.Name };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

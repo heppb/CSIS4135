@@ -1,4 +1,53 @@
-﻿@model EventManager.Models.Events
+﻿@model IEnumerable<EventManager.Models.Events>
 @{
-    ViewData["Title"] = "Event Sub Page";
+    ViewData["Title"] = "Events Calendar Page";
 }
+@inject UserManager<ApplicationUser> UserManager
+<h2>Events Followed</h2>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Event
+                </th>
+                <th>
+                    Artist
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Genre
+                </th>
+            </tr>
+        </thead>
+        @foreach (var events in Model)
+        {
+            @if (events.EventDate > DateTime.Now)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.EventName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.ArtistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.EventDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.Genre)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+

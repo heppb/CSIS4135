@@ -14,9 +14,20 @@
         <form asp-controller="Home" asp-action="Index" method="get">
             <div>
                 <input type="text" name="SearchString">
-                <input type="submit" value="Filter" />
+                <p>
+                    <input type="submit" value="Filter" />
+                </p>
             </div>
         </form>
+        @if (User.IsInRole("ARTIST") == true)
+        {
+            <form asp-controller="Home" asp-action="Index" method="get">
+                <p>
+                    <input type="hidden" name="Sorting" value="Sorting"/>
+                    <input type="submit" value="Sort" />
+                </p>
+            </form>
+        }
     </div>
 </div>
 <div>
@@ -42,37 +53,40 @@
         </thead>
         @foreach (var events in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => events.EventName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => events.ArtistName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => events.EventDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => events.Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => events.Genre)
-                </td>
-                <td>
-                    <a asp-action="EventSub" asp-route-id="@events.EventsID">Add Event to Calendar</a> |
-                    <a asp-action="Follow" asp-route-id="@events.ArtistName">Follow Artist</a> |
-                    <a asp-action="EventDetails" asp-route-id="@events.EventsID">Event Details</a> |
-                    @if (User.IsInRole("Artist") == true)
-                    {
-                        <a asp-action="EditEvent" asp-route-id="@events.EventsID">Edit |</a>
-                    }
-                    @if (User.IsInRole("Artist") == true)
-                    {
-                        <a asp-action="RemoveEvent" asp-route-id="@events.EventsID">Remove</a>
-                    }
-                     
-                </td>
-            </tr>
+            @if(events.EventDate > DateTime.Now)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.EventName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.ArtistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.EventDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => events.Genre)
+                    </td>
+                    <td>
+                        <a asp-action="EventSub" asp-route-id="@events.EventsID">Add Event to Calendar</a> |
+                        <a asp-action="Follow" asp-route-id="@events.EventsID">Follow Artist</a> |
+                        <a asp-action="EventDetails" asp-route-id="@events.EventsID">Event Details</a> |
+                        @if (User.IsInRole("ARTIST") == true)
+                        {
+                            <a asp-action="EditEvent" asp-route-id="@events.EventsID">Edit |</a>
+                        }
+                        @if (User.IsInRole("ARTIST") == true)
+                        {
+                            <a asp-action="RemoveEvent" asp-route-id="@events.EventsID">Remove</a>
+                        }
+                         
+                    </td>
+                </tr>
+            }
         }
     </table>
 </div>
