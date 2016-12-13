@@ -115,8 +115,8 @@ namespace EventManager.Controllers
                         testUserEvent.Events = new List<Events>();
                     }
                     testUserEvent.Events.Add(eventName);
-                    _context.UserEvents.Update(testUserEvent);
-                    _context.SaveChanges();
+                    /*_context.UserEvents.Update(testUserEvent);
+                    _context.SaveChanges();*/
                     return View(testUserEvent);
                 }
             }
@@ -163,12 +163,37 @@ namespace EventManager.Controllers
                         testFollowArtist.Artists = new List<ApplicationUser>();
                     }
                     testFollowArtist.Artists.Add(artist);
-                    _context.FollowedArtists.Update(testFollowArtist);
-                    _context.SaveChanges();
+                    /*_context.FollowedArtists.Update(testFollowArtist);
+                    _context.SaveChanges();*/
                     return View(testFollowArtist);
                 }
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        [Authorize]
+        public IActionResult Unfollow(string artistName)
+        {
+            {
+                ApplicationUser artist = new ApplicationUser();
+                foreach (var findArtist in _context.Users)
+                {
+                    if (findArtist.UserName == artistName)
+                    {
+                        artist = findArtist;
+                    }
+                }
+                string userID = _userManager.GetUserId(User);
+                foreach (var testFollowArtist in _context.FollowedArtists)
+                {
+                    if (testFollowArtist.UserID == userID)
+                    {
+                        /*_context.FollowedArtists.Remove(testFollowArtist);
+                        _context.SaveChanges();*/
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
+                }
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
         }
         public IActionResult EventDetails(int? id)
         {
